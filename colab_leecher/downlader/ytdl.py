@@ -96,7 +96,7 @@ def YouTubeDL(url):
             logging.info(d)
 
     ydl_opts = {
-        "format": "best",
+        "format": "bv*[height<=720][ext=mp4]+ba[ext=m4a]/bv*",
         "allow_multiple_video_streams": True,
         "allow_multiple_audio_streams": True,
         "writethumbnail": True,
@@ -131,14 +131,14 @@ def YouTubeDL(url):
                     except yt_dlp.utils.DownloadError as e:
                         if e.exc_info[0] == 36:
                             ydl_opts["outtmpl"] = {
-                                "default": f"{Paths.down_path}/%(id)s.%(ext)s",
+                                "default": f"{Paths.down_path}/%(title)s.%(ext)s",
                                 "thumbnail": f"{Paths.thumbnail_ytdl}/%(id)s.%(ext)s",
                             }
                             ydl.download([video_url])
             else:
                 YTDL.header = ""
                 ydl_opts["outtmpl"] = {
-                    "default": f"{Paths.down_path}/%(id)s.%(ext)s",
+                    "default": f"{Paths.down_path}/%(title)s.%(ext)s",
                     "thumbnail": f"{Paths.thumbnail_ytdl}/%(id)s.%(ext)s",
                 }
                 try:
@@ -146,7 +146,7 @@ def YouTubeDL(url):
                 except yt_dlp.utils.DownloadError as e:
                     if e.exc_info[0] == 36:
                         ydl_opts["outtmpl"] = {
-                            "default": f"{Paths.down_path}/%(id)s.%(ext)s",
+                            "default": f"{Paths.down_path}/%(title)s.%(ext)s",
                             "thumbnail": f"{Paths.thumbnail_ytdl}/%(id)s.%(ext)s",
                         }
                         ydl.download([url])
